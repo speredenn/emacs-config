@@ -37,15 +37,6 @@
 	      :load-path "mu4e"))
  (pcache status "installed" recipe
 	 (:name pcache :type github :pkgname "sigma/pcache" :description "persistent caching for Emacs" :website "http://github.com/sigma/pcache"))
- (slime status "installed" recipe
-	(:name slime :description "Superior Lisp Interaction Mode for Emacs" :type github :autoloads "slime-autoloads" :info "doc" :pkgname "nablaone/slime" :load-path
-	       ("." "contrib")
-	       :compile
-	       (".")
-	       :build
-	       '(("make" "-C" "doc" "slime.info"))
-	       :post-init
-	       (slime-setup)))
  (smex status "installed" recipe
        (:name smex :description "M-x interface with Ido-style fuzzy matching." :type github :pkgname "nonsequitur/smex" :features smex :post-init
 	      (smex-initialize)))
