@@ -19,6 +19,20 @@
                 :load
                 ("tex-site.el" "preview/preview-latex.el")
                 :info "doc"))
+ (bbdb status "installed" recipe
+       (:name bbdb :website "http://bbdb.sourceforge.net/" :description "The Insidious Big Brother Database (BBDB) is a contact management utility." :type git :url "git://git.savannah.nongnu.org/bbdb.git" :load-path
+              ("./lisp")
+              :build
+              `("autoconf" ,(concat "./configure --with-emacs=" el-get-emacs)
+                "make clean" "rm -f lisp/bbdb-autoloads.el" "make info bbdb")
+              :features bbdb-loaddefs :autoloads nil :info "doc" :post-init
+              (bbdb-initialize)))
+ (bbdb-vcard status "installed" recipe
+             (:name bbdb-vcard :website "https://github.com/trebb/bbdb-vcard#readme" :description "vCard Import and Export for The Insidious Big Brother Database (BBDB)" :type github :pkgname "trebb/bbdb-vcard" :features bbdb-vcard))
+ (bbdb-vcard-export status "installed" recipe
+                    (:name bbdb-vcard-export :auto-generated t :type emacswiki :description "export BBDB as vCard files" :website "https://raw.github.com/emacsmirror/emacswiki.org/master/bbdb-vcard-export.el"))
+ (bst-mode status "installed" recipe
+           (:name bst-mode :auto-generated t :type emacswiki :description "major mode for editing BibTeX style files" :website "https://raw.github.com/emacsmirror/emacswiki.org/master/bst-mode.el"))
  (el-get status "installed" recipe
          (:name el-get :website "https://github.com/dimitri/el-get#readme" :description "Manage the external elisp bits and pieces you depend upon." :type github :branch "4.stable" :pkgname "dimitri/el-get" :info "." :load "el-get.el"))
  (fixme-mode status "installed" recipe
