@@ -38,6 +38,8 @@
                                  (autoload 'color-theme-solarized-dark "color-theme-solarized" "color-theme: solarized-dark" t))))
  (cython-mode status "installed" recipe
               (:name cython-mode :description "Major mode for the Cython language" :type http :url "https://raw.github.com/cython/cython/master/Tools/cython-mode.el" :features cython-mode :localname "cython-mode.el"))
+ (dired+ status "installed" recipe
+         (:name dired+ :description "Extensions to Dired" :type emacswiki :features dired+))
  (el-get status "installed" recipe
          (:name el-get :website "https://github.com/dimitri/el-get#readme" :description "Manage the external elisp bits and pieces you depend upon." :type github :branch "4.stable" :pkgname "dimitri/el-get" :info "." :load "el-get.el"))
  (fixme-mode status "installed" recipe
