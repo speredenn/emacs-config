@@ -42,6 +42,14 @@
          (:name dired+ :description "Extensions to Dired" :type emacswiki :features dired+))
  (el-get status "installed" recipe
          (:name el-get :website "https://github.com/dimitri/el-get#readme" :description "Manage the external elisp bits and pieces you depend upon." :type github :branch "4.stable" :pkgname "dimitri/el-get" :info "." :load "el-get.el"))
+ (emacs-w3m status "installed" recipe
+            (:name emacs-w3m :description "A simple Emacs interface to w3m" :type cvs :module "emacs-w3m" :url ":pserver:anonymous@cvs.namazu.org:/storage/cvsroot" :build
+                   `("autoconf"
+                     ("./configure" ,(concat "--with-emacs=" el-get-emacs))
+                     "make")
+                   :build/windows-nt
+                   ("sh /usr/bin/autoconf" "sh ./configure" "make")
+                   :info "doc"))
  (fixme-mode status "installed" recipe
              (:name fixme-mode :auto-generated t :type emacswiki :description "Makes FIXME, TODO, etc. appear in big, angry letters" :website "https://raw.github.com/emacsmirror/emacswiki.org/master/fixme-mode.el"))
  (flim status "installed" recipe
