@@ -21,6 +21,8 @@
                 :info "doc"))
  (bst-mode status "installed" recipe
            (:name bst-mode :auto-generated t :type emacswiki :description "major mode for editing BibTeX style files" :website "https://raw.github.com/emacsmirror/emacswiki.org/master/bst-mode.el"))
+ (centered-cursor-mode status "installed" recipe
+                       (:name centered-cursor-mode :auto-generated t :type emacswiki :description "cursor stays vertically centered" :website "https://raw.github.com/emacsmirror/emacswiki.org/master/centered-cursor-mode.el"))
  (color-theme status "installed" recipe
               (:name color-theme :description "An Emacs-Lisp package with more than 50 color themes for your use. For questions about color-theme" :website "http://www.nongnu.org/color-theme/" :type http-tar :options
                      ("xzf")
