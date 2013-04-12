@@ -80,6 +80,9 @@
        (:name gist :type github :pkgname "defunkt/gist.el" :depends
               (gh tabulated-list)
               :description "Emacs integration for gist.github.com" :website "http://github.com/defunkt/gist.el"))
+ (ipython status "installed" recipe
+          (:name ipython :description "Adds support for IPython to python-mode.el" :type http :url "https://raw.github.com/ipython/ipython/master/docs/emacs/ipython.el" :depends python-mode :features ipython :post-init
+                 (setq py-shell-name "ipython")))
  (logito status "installed" recipe
          (:name logito :type github :pkgname "sigma/logito" :description "logging library for Emacs" :website "http://github.com/sigma/logito"))
  (markdown-mode status "installed" recipe
@@ -99,6 +102,16 @@
               :load-path "mu4e"))
  (pcache status "installed" recipe
          (:name pcache :type github :pkgname "sigma/pcache" :description "persistent caching for Emacs" :website "http://github.com/sigma/pcache"))
+ (python-mode status "installed" recipe
+              (:type github :pkgname "emacsmirror/python-mode" :name python-mode :type emacsmirror :description "Major mode for editing Python programs" :features
+                     (python-mode doctest-mode)
+                     :compile nil :load "test/doctest-mode.el" :prepare
+                     (progn
+                       (autoload 'python-mode "python-mode" "Python editing mode." t)
+                       (add-to-list 'auto-mode-alist
+                                    '("\\.py$" . python-mode))
+                       (add-to-list 'interpreter-mode-alist
+                                    '("python" . python-mode)))))
  (semi status "installed" recipe
        (:name semi :description "SEMI is a library to provide MIME feature for GNU Emacs." :depends flim :type github :branch "semi-1_14-wl" :pkgname "wanderlust/semi" :build
               (mapcar
