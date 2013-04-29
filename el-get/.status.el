@@ -1,184 +1,66 @@
-((apel status "installed" recipe
-       (:name apel :website "http://www.kanji.zinbun.kyoto-u.ac.jp/~tomo/elisp/APEL/" :description "APEL (A Portable Emacs Library) is a library to support to write portable Emacs Lisp programs." :type github :pkgname "wanderlust/apel" :build
-              (mapcar
-               (lambda
-                 (target)
-                 (list el-get-emacs
-                       (split-string "-batch -q -no-site-file -l APEL-MK -f")
-                       target "prefix" "site-lisp" "site-lisp"))
-               '("compile-apel" "install-apel"))
-              :load-path
-              ("site-lisp/apel" "site-lisp/emu")))
- (auctex status "installed" recipe
-         (:name auctex :website "http://www.gnu.org/software/auctex/" :description "AUCTeX is an extensible package for writing and formatting TeX files in GNU Emacs and XEmacs. It supports many different TeX macro packages, including AMS-TeX, LaTeX, Texinfo, ConTeXt, and docTeX (dtx files)." :type cvs :module "auctex" :url ":pserver:anonymous@cvs.sv.gnu.org:/sources/auctex" :build
-                `(("./autogen.sh")
-                  ("./configure" "--without-texmf-dir" "--with-lispdir=`pwd`" ,(concat "--with-emacs=" el-get-emacs))
-                  "make")
-                :load-path
-                ("." "preview")
-                :load
-                ("tex-site.el" "preview/preview-latex.el")
-                :info "doc"))
- (bst-mode status "installed" recipe
-           (:name bst-mode :auto-generated t :type emacswiki :description "major mode for editing BibTeX style files" :website "https://raw.github.com/emacsmirror/emacswiki.org/master/bst-mode.el"))
- (centered-cursor-mode status "installed" recipe
-                       (:name centered-cursor-mode :auto-generated t :type emacswiki :description "cursor stays vertically centered" :website "https://raw.github.com/emacsmirror/emacswiki.org/master/centered-cursor-mode.el"))
- (color-theme status "installed" recipe
-              (:name color-theme :description "An Emacs-Lisp package with more than 50 color themes for your use. For questions about color-theme" :website "http://www.nongnu.org/color-theme/" :type http-tar :options
-                     ("xzf")
-                     :url "http://download.savannah.gnu.org/releases/color-theme/color-theme-6.6.0.tar.gz" :load "color-theme.el" :features "color-theme" :post-init
-                     (progn
-                       (color-theme-initialize)
-                       (setq color-theme-is-global t))))
- (color-theme-solarized status "installed" recipe
-                        (:name color-theme-solarized :description "Emacs highlighting using Ethan Schoonover's Solarized color scheme" :type github :pkgname "sellout/emacs-color-theme-solarized" :depends color-theme :prepare
-                               (progn
-                                 (add-to-list 'custom-theme-load-path default-directory)
-                                 (autoload 'color-theme-solarized-light "color-theme-solarized" "color-theme: solarized-light" t)
-                                 (autoload 'color-theme-solarized-dark "color-theme-solarized" "color-theme: solarized-dark" t))))
- (cython-mode status "installed" recipe
-              (:name cython-mode :description "Major mode for the Cython language" :type http :url "https://raw.github.com/cython/cython/master/Tools/cython-mode.el" :features cython-mode :localname "cython-mode.el"))
- (dired+ status "installed" recipe
-         (:name dired+ :description "Extensions to Dired" :type emacswiki :features dired+))
+((auctex status "installed" recipe
+	 (:name auctex :website "http://www.gnu.org/software/auctex/" :description "AUCTeX is an extensible package for writing and formatting TeX files in GNU Emacs and XEmacs. It supports many different TeX macro packages, including AMS-TeX, LaTeX, Texinfo, ConTeXt, and docTeX (dtx files)." :type cvs :module "auctex" :url ":pserver:anonymous@cvs.sv.gnu.org:/sources/auctex" :build
+		`(("./autogen.sh")
+		  ("./configure" "--without-texmf-dir" "--with-lispdir=`pwd`" ,(concat "--with-emacs=" el-get-emacs))
+		  "make")
+		:load-path
+		("." "preview")
+		:load
+		("tex-site.el" "preview/preview-latex.el")
+		:info "doc"))
  (el-get status "installed" recipe
-         (:name el-get :website "https://github.com/dimitri/el-get#readme" :description "Manage the external elisp bits and pieces you depend upon." :type github :branch "4.stable" :pkgname "dimitri/el-get" :info "." :load "el-get.el"))
- (emacs-w3m status "installed" recipe
-            (:name emacs-w3m :description "A simple Emacs interface to w3m" :type cvs :module "emacs-w3m" :url ":pserver:anonymous@cvs.namazu.org:/storage/cvsroot" :build
-                   `("autoconf"
-                     ("./configure" ,(concat "--with-emacs=" el-get-emacs))
-                     "make")
-                   :build/windows-nt
-                   ("sh /usr/bin/autoconf" "sh ./configure" "make")
-                   :info "doc"))
- (fixme-mode status "installed" recipe
-             (:name fixme-mode :auto-generated t :type emacswiki :description "Makes FIXME, TODO, etc. appear in big, angry letters" :website "https://raw.github.com/emacsmirror/emacswiki.org/master/fixme-mode.el"))
- (flim status "installed" recipe
-       (:name flim :description "A library to provide basic features about message representation or encoding" :depends apel :type github :branch "flim-1_14-wl" :pkgname "wanderlust/flim" :build
-              (mapcar
-               (lambda
-                 (target)
-                 (list el-get-emacs
-                       (mapcar
-                        (lambda
-                          (pkg)
-                          (mapcar
-                           (lambda
-                             (d)
-                             `("-L" ,d))
-                           (el-get-load-path pkg)))
-                        '("apel"))
-                       (split-string "-batch -q -no-site-file -l FLIM-MK -f")
-                       target "prefix" "site-lisp" "site-lisp"))
-               '("compile-flim" "install-flim"))
-              :load-path
-              ("site-lisp/flim")))
+	 (:name el-get :website "https://github.com/dimitri/el-get#readme" :description "Manage the external elisp bits and pieces you depend upon." :type github :branch "4.stable" :pkgname "dimitri/el-get" :info "." :load "el-get.el"))
  (gh status "installed" recipe
      (:name gh :type github :pkgname "sigma/gh.el" :depends
-            (pcache logito)
-            :description "Github API client libraries" :website "http://github.com/sigma/gh.el"))
+	    (pcache logito)
+	    :description "Github API client libraries" :website "http://github.com/sigma/gh.el"))
  (gist status "installed" recipe
        (:name gist :type github :pkgname "defunkt/gist.el" :depends
-              (gh tabulated-list)
-              :description "Emacs integration for gist.github.com" :website "http://github.com/defunkt/gist.el"))
- (ipython status "installed" recipe
-          (:name ipython :description "Adds support for IPython to python-mode.el" :type http :url "https://raw.github.com/ipython/ipython/master/docs/emacs/ipython.el" :depends python-mode :features ipython :post-init
-                 (setq py-shell-name "ipython")))
+	      (gh tabulated-list)
+	      :description "Emacs integration for gist.github.com" :website "http://github.com/defunkt/gist.el"))
  (logito status "installed" recipe
-         (:name logito :type github :pkgname "sigma/logito" :description "logging library for Emacs" :website "http://github.com/sigma/logito"))
+	 (:name logito :type github :pkgname "sigma/logito" :description "logging library for Emacs" :website "http://github.com/sigma/logito"))
  (markdown-mode status "installed" recipe
-                (:name markdown-mode :description "Major mode to edit Markdown files in Emacs" :type git :url "git://jblevins.org/git/markdown-mode.git" :before
-                       (add-to-list 'auto-mode-alist
-                                    '("\\.\\(md\\|mdown\\|markdown\\)\\'" . markdown-mode))))
+		(:name markdown-mode :description "Major mode to edit Markdown files in Emacs" :type git :url "git://jblevins.org/git/markdown-mode.git" :before
+		       (add-to-list 'auto-mode-alist
+				    '("\\.\\(md\\|mdown\\|markdown\\)\\'" . markdown-mode))))
  (mu4e status "installed" recipe
        (:name mu4e :website "http://www.djcbsoftware.nl/code/mu/mu4e.html" :description "An emacs-based e-mail client which uses mu (http://www.djcbsoftware.nl/code/mu/) as its back-end: mu4e." :type github :pkgname "djcb/mu" :post-init
-              (setq mu4e-mu-binary
-                    (expand-file-name "mu"
-                                      (expand-file-name "mu"
-                                                        (el-get-package-directory 'mu4e))))
-              :build
-              `(("autoreconf -i")
-                ("./configure")
-                ("make"))
-              :load-path "mu4e"))
+	      (setq mu4e-mu-binary
+		    (expand-file-name "mu"
+				      (expand-file-name "mu"
+							(el-get-package-directory 'mu4e))))
+	      :build
+	      `(("autoreconf -i")
+		("./configure")
+		("make"))
+	      :load-path "mu4e"))
  (pcache status "installed" recipe
-         (:name pcache :type github :pkgname "sigma/pcache" :description "persistent caching for Emacs" :website "http://github.com/sigma/pcache"))
- (python-mode status "installed" recipe
-              (:type github :pkgname "emacsmirror/python-mode" :name python-mode :type emacsmirror :description "Major mode for editing Python programs" :features
-                     (python-mode doctest-mode)
-                     :compile nil :load "test/doctest-mode.el" :prepare
-                     (progn
-                       (autoload 'python-mode "python-mode" "Python editing mode." t)
-                       (add-to-list 'auto-mode-alist
-                                    '("\\.py$" . python-mode))
-                       (add-to-list 'interpreter-mode-alist
-                                    '("python" . python-mode)))))
- (semi status "installed" recipe
-       (:name semi :description "SEMI is a library to provide MIME feature for GNU Emacs." :depends flim :type github :branch "semi-1_14-wl" :pkgname "wanderlust/semi" :build
-              (mapcar
-               (lambda
-                 (target)
-                 (list el-get-emacs
-                       (mapcar
-                        (lambda
-                          (pkg)
-                          (mapcar
-                           (lambda
-                             (d)
-                             `("-L" ,d))
-                           (el-get-load-path pkg)))
-                        '("apel" "flim"))
-                       (split-string "-batch -q -no-site-file -l SEMI-MK -f")
-                       target "prefix" "site-lisp" "site-lisp"))
-               '("compile-semi" "install-semi"))
-              :load-path
-              ("site-lisp/semi/")))
+	 (:name pcache :type github :pkgname "sigma/pcache" :description "persistent caching for Emacs" :website "http://github.com/sigma/pcache"))
+ (slime status "installed" recipe
+	(:name slime :description "Superior Lisp Interaction Mode for Emacs" :type github :autoloads "slime-autoloads" :info "doc" :pkgname "antifuchs/slime" :load-path
+	       ("." "contrib")
+	       :compile
+	       (".")
+	       :build
+	       '(("make" "-C" "doc" "slime.info"))
+	       :post-init
+	       (slime-setup)))
  (smex status "installed" recipe
        (:name smex :description "M-x interface with Ido-style fuzzy matching." :type github :pkgname "nonsequitur/smex" :features smex :post-init
-              (smex-initialize)))
+	      (smex-initialize)))
  (tabulated-list status "installed" recipe
-                 (:name tabulated-list :type github :pkgname "sigma/tabulated-list.el" :description "generic major mode for tabulated lists." :website "http://github.com/sigma/tabulated-list.el"))
+		 (:name tabulated-list :type github :pkgname "sigma/tabulated-list.el" :description "generic major mode for tabulated lists." :website "http://github.com/sigma/tabulated-list.el"))
  (tuareg-mode status "installed" recipe
-              (:name tuareg-mode :type svn :url "svn://svn.forge.ocamlcore.org/svn/tuareg/trunk" :description "A  GOOD Emacs mode to edit Objective Caml code." :load-path
-                     (".")
-                     :prepare
-                     (progn
-                       (autoload 'tuareg-mode "tuareg" "Major mode for editing Caml code" t)
-                       (autoload 'camldebug "camldebug" "Run the Caml debugger" t)
-                       (dolist
-                           (ext
-                            '(".cmo" ".cmx" ".cma" ".cmxa" ".cmi"))
-                         (add-to-list 'completion-ignored-extensions ext))
-                       (add-to-list 'auto-mode-alist
-                                    '("\\.ml[iylp]?" . tuareg-mode)))))
- (wanderlust status "installed" recipe
-             (:name wanderlust :description "Wanderlust bootstrap." :depends semi :type github :pkgname "wanderlust/wanderlust" :build
-                    (mapcar
-                     (lambda
-                       (target-and-dirs)
-                       (list el-get-emacs
-                             (mapcar
-                              (lambda
-                                (pkg)
-                                (mapcar
-                                 (lambda
-                                   (d)
-                                   `("-L" ,d))
-                                 (el-get-load-path pkg)))
-                              (append
-                               '("apel" "flim" "semi")
-                               (when
-                                   (el-get-package-exists-p "bbdb")
-                                 (list "bbdb"))))
-                             "--eval"
-                             (el-get-print-to-string
-                              '(progn
-                                 (setq wl-install-utils t)
-                                 (setq wl-info-lang "en")
-                                 (setq wl-news-lang "en")))
-                             (split-string "-batch -q -no-site-file -l WL-MK -f")
-                             target-and-dirs))
-                     '(("wl-texinfo-format" "doc")
-                       ("compile-wl-package" "site-lisp" "icons")
-                       ("install-wl-package" "site-lisp" "icons")))
-                    :info "doc/wl.info" :load-path
-                    ("site-lisp/wl" "utils"))))
+	      (:name tuareg-mode :type svn :url "svn://svn.forge.ocamlcore.org/svn/tuareg/trunk" :description "A  GOOD Emacs mode to edit Objective Caml code." :load-path
+		     (".")
+		     :prepare
+		     (progn
+		       (autoload 'tuareg-mode "tuareg" "Major mode for editing Caml code" t)
+		       (autoload 'camldebug "camldebug" "Run the Caml debugger" t)
+		       (dolist
+			   (ext
+			    '(".cmo" ".cmx" ".cma" ".cmxa" ".cmi"))
+			 (add-to-list 'completion-ignored-extensions ext))
+		       (add-to-list 'auto-mode-alist
+				    '("\\.ml[iylp]?" . tuareg-mode))))))
