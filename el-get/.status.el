@@ -27,6 +27,8 @@
  (auto-complete-yasnippet status "installed" recipe
                           (:name auto-complete-yasnippet :description "Auto-complete sources for YASnippet" :type http :url "http://www.cx4a.org/pub/auto-complete-yasnippet.el" :depends
                                  (auto-complete yasnippet)))
+ (autopair status "installed" recipe
+           (:name autopair :website "https://github.com/capitaomorte/autopair" :description "Autopair is an extension to the Emacs text editor that automatically pairs braces and quotes." :type github :pkgname "capitaomorte/autopair" :features autopair))
  (cedet status "installed" recipe
         (:name cedet :website "http://cedet.sourceforge.net/" :description "CEDET is a Collection of Emacs Development Environment Tools written with the end goal of creating an advanced development environment in Emacs." :type bzr :url "bzr://cedet.bzr.sourceforge.net/bzrroot/cedet/code/trunk" :build
                `(("sh" "-c" "touch `find . -name Makefile`")
@@ -190,6 +192,8 @@
                   :type hg :url "http://bitbucket.org/agr/ropemode"))
  (rst-mode status "installed" recipe
            (:name rst-mode :description "Mode for viewing and editing reStructuredText-documents." :type http :url "http://docutils.sourceforge.net/tools/editors/emacs/rst.el" :features rst))
+ (smart-operator status "installed" recipe
+                 (:name smart-operator :description "Insert operators with surrounding spaces smartly." :type github :pkgname "xwl/smart-operator"))
  (smex status "installed" recipe
        (:name smex :description "M-x interface with Ido-style fuzzy matching." :type github :pkgname "nonsequitur/smex" :features smex :post-init
               (smex-initialize)))
