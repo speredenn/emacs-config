@@ -1,4 +1,7 @@
-*
-!init.el
-!.gitignore
-!el-get/.status.el
+# Ignore temporary files folders
+auto-save-list/
+server
+
+# Ignore temporary files
+.#*
+*~
