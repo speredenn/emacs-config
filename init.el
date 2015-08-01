@@ -3,39 +3,43 @@
 ;; Then comes the general settings
 (cond
  ((string-match "GNU" (emacs-version))
-  (message "Customizing GNU Emacs")
   (cond 
    ((string-match "linux" system-configuration)
-    (message "Customizing GNU Emacs for GNU/Linux")
-    ;; Those settings apply only to GNU/Linux
-    ;; [GNU/Linux section > beginning]
-    
-    ;; [GNU/Linux section > end]
-    )
+    (if (file-exists-p "~/.emacs.d/emacs-gnulinux.el")
+	(progn
+	  (message "Loading GNU Emacs customizations for GNU/Linux")
+	  (load-file "~/.emacs.d/emacs-gnulinux.el"))))
    ((string-match "pc" system-configuration)
-    (message "customizing GNU Emacs for Windows")
-    ;; Those settings apply only to Microsoft Windows
-    ;; [Windows section > beginning]
-    
-    ;; Use 10-pt Consolas as default font
-    (set-face-attribute 'default nil
-			:family "Consolas" :height 100)
-    
-    ;; [Windows section > end]
-    )
+    (if (file-exists-p "~/.emacs.d/emacs-microsoft.el")
+	(progn 
+	  (message "Loading GNU Emacs customizations for Microsoft Windows")
+	  (load-file "~/.emacs.d/emacs-microsoft.el"))))
    )
-  ;; Settings appling to GNU/Emacs on all the OS
-  ;; [Emacs global settings > beginning]
-  
-  (server-start)
-  
-  ;; [Emacs global settings > end]
-  )
+  (if (file-exists-p "~/.emacs.d/emacs-main.el")
+      (progn
+	(message "Loading GNU Emacs customizations common to all OS")
+	(load-file "~/.emacs.d/emacs-main.el")))
+  ) ; matched GNU
  ((string-match "XEmacs" (emacs-version))
-  (message "customizing XEmacs")
-  ;; Those settings apply only to XEmacs
-  ;; [XEmacs section > beginning]
-  
-  ;; [XEmacs section > end]
-  )
+  (cond 
+   ((string-match "linux" system-configuration)
+    (if (file-exists-p "~/.emacs.d/xemacs-gnulinux.el")
+	(progn
+	  (message "Loading XEmacs customizations for Linux")
+	  (load-file "~/.emacs.d/xemacs-gnulinux.el"))))
+   ((string-match "win32" system-configuration) ; TODO: string to be changed
+    (if (file-exists-p "~/.emacs.d/xemacs-microsoft.el")
+	(progn
+	  (message "Loading XEmacs customizations for Microsoft Windows")
+	  (load-file "~/.emacs.d/xemacs-microsoft.el"))))
+   )
+  (if (file-exists-p "~/.emacs.d/xemacs-main.el")
+      (progn
+	(message "loading XEmacs customizations common to all OS")
+	(load-file "~/.emacs.d/xemacs-main.el")))
+  ) ; matched XEmacs
  )
+(if (file-exists-p "~/.emacs.d/main.el")
+    (progn
+      (message "loading Emacs customizations common to all Emacs and all OS")
+      (load-file "~/.emacs.d/main.el")))
