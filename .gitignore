@@ -1,7 +1,9 @@
 # Ignore temporary files folders
 auto-save-list/
 server
+elpa
 
 # Ignore temporary files
 .#*
 *~
+recentf
