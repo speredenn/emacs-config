@@ -6,3 +6,4 @@ elpa
 # Ignore temporary files
 .#*
 *~
+recentf
